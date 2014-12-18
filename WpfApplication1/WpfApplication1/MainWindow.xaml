@@ -1,0 +1,88 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Blog Post JSON Writer" Height="648" Width="525">
+    <Window.Resources>
+        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="BorderBrush" Value="black">
+                <!--<Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="White" Offset="0.0" />
+                        <GradientStop Color="Blue" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>-->
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="TextBox.GotFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Blue" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:1"/>
+                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" Duration="0:0:0.1" FillBehavior="HoldEnd" From="1,1,1,1" To="3,3,3,3" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TextBox.LostFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Black" Storyboard.TargetProperty="(TextBox.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:1"/>
+                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" Duration="0:0:0.1" FillBehavior="HoldEnd" From="4,4,4,4" To="1,1,1,1" /> 
+
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        
+        <Button Click="newBlogPost" Content="New Blog Post" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Click="newProject" Content="New Project" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Name="ModifyExisting" Click="modifyExisting" Tag="" Content="Modify existing" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="100"/>
+
+        <TextBlock Name="HeaderTitle" HorizontalAlignment="Left" Height="78" Margin="115,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="365" FontSize="50" TextAlignment="Center"/>
+
+        <Button Visibility="hidden" Name="fileBrowseButton" Click="fileBrowse" Content="Choose file" HorizontalAlignment="Left" Margin="84,137,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock Visibility="hidden" Tag="" Name="fileInfo" HorizontalAlignment="Left" Margin="179,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" Height="30" Foreground="Black" Text=""/>
+
+        <!--    BLOG      -->
+        <TextBox  Visibility="Hidden" Style="{StaticResource TextBoxStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Name="PostTitle" HorizontalAlignment="Left" Height="30" Margin="84,180,0,0" TextWrapping="Wrap" Tag="Title" Text="Title" VerticalAlignment="Top" Width="365"/>
+        <TextBox  Visibility="Hidden" Style="{StaticResource TextBoxStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Name="PostText" HorizontalAlignment="Left" Height="155" Margin="84,221,0,0" TextWrapping="Wrap" Tag="Text goes here..." Text="Text goes here..." VerticalAlignment="Top" Width="365"/>
+        <TextBox  Visibility="Hidden" Style="{StaticResource TextBoxStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Name="PostShortText" HorizontalAlignment="Left" Height="30" Margin="84,390,0,0" TextWrapping="Wrap" Tag="Short description" Text="Short description" VerticalAlignment="Top" Width="365"/>
+
+        <ListBox Visibility="Hidden" Name="PostImages" HorizontalAlignment="Left" Height="84" Margin="84,432,0,0" VerticalAlignment="Top" Width="265"/>
+        <Button Visibility="Hidden" Name="AddImage" Click="addImage" Content="Add image" HorizontalAlignment="Left" Height="44" Margin="349,432,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Visibility="Hidden" Name="RemoveImage" Click="removeImage" Content="Remove Image" HorizontalAlignment="Left" Height="40" Margin="349,476,0,0" VerticalAlignment="Top" Width="100"/>
+
+        <Button Name="AddPost"  Visibility="Hidden" Click="addPost" Content="Add Post" HorizontalAlignment="Left" Margin="193,538,0,0" VerticalAlignment="Top" Width="120"/>
+        
+        
+        <!--    PROJECT      -->
+        <TextBox  Visibility="Hidden" Style="{StaticResource TextBoxStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Name="ProjectName" HorizontalAlignment="Left" Height="30" Margin="84,180,0,0" TextWrapping="Wrap" Tag="Project name" Text="Project name" VerticalAlignment="Top" Width="365"/>
+
+        <Button  Visibility="Hidden" Name="ProjectBlogButton" Click="fileBrowse" Content="Choose Blog File" HorizontalAlignment="Left" Margin="84,231,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBlock Tag="" Name="blogFileInfo" HorizontalAlignment="Left" Margin="198,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" Height="30" Foreground="Black" Text=""/>
+
+        <TextBox  Visibility="Hidden" Style="{StaticResource TextBoxStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Name="ProjectType" HorizontalAlignment="Left" Height="30" Margin="84,271,0,0" TextWrapping="Wrap" Tag="Project type" Text="Project type" VerticalAlignment="Top" Width="365"/>
+
+        <TextBox Visibility="Hidden" Name="WriteTags" Style="{StaticResource TextBoxStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" HorizontalAlignment="Left" Height="30" Margin="84,318,0,0" TextWrapping="Wrap" Tag="Project tags" Text="Project tags" VerticalAlignment="Top" Width="215"/>
+        <Button Visibility="Hidden" Click="addTag"  Name="AddTag" Content="Add tag" HorizontalAlignment="Left" Height="30" Margin="304,318,0,0" VerticalAlignment="Top" Width="61"/>
+        <Button Visibility="Hidden" Click="removeTag"  Name="RemoveTag" Content="Remove tag" HorizontalAlignment="Left" Height="30" Margin="370,318,0,0" VerticalAlignment="Top" Width="70"/>
+        <ListBox Visibility="Hidden" Name="ProjectTags" HorizontalAlignment="Left" Height="95" Margin="84,362,0,0" VerticalAlignment="Top" Width="365"/>
+
+        <Button  Visibility="Hidden" Name="ProjectImageButton" Click="addProjectImage" Content="Image File" HorizontalAlignment="Left" Margin="84,476,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBlock Visibility="Hidden" Text="" Name="ProjectImage" HorizontalAlignment="Left" Margin="198,476,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" Height="30" Foreground="Black"/>
+
+
+        <TextBox  Visibility="Hidden" Style="{StaticResource TextBoxStyle}" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Name="ProjectDesc" HorizontalAlignment="Left" Height="30" Margin="84,516,0,0" TextWrapping="Wrap" Tag="Project short description" Text="Project short description" VerticalAlignment="Top" Width="365"/>
+        
+        <!--    MODIFY EXISTING     -->
+       <!-- <ListBox Name="Existing"  HorizontalAlignment="Left" Height="315" Margin="119,161,0,0" VerticalAlignment="Top" Width="308">
+        <Button Content="Select" Click="selectExisting" HorizontalAlignment="Left" Margin="123,485,0,0" VerticalAlignment="Top" Width="75"/>-->
+        <ComboBox Visibility="Visible" Name="Existing" Margin="127,95,37,486" Tag=""/>
+
+        <Button Name="AddProject"  Visibility="Visible" Click="addProject" Content="Add Project" HorizontalAlignment="Left" Margin="179,561,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock Name="StatusBox" Visibility="Hidden" HorizontalAlignment="Left" Height="32" Margin="80,576,0,10" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="365" FontSize="18" TextAlignment="Center" Foreground="Red"/>
+       
+
+    </Grid>
+</Window>
